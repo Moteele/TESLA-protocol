@@ -7,8 +7,14 @@ std::vector<KeyType> keys;
 
 
 int main() {
-	Sender sender(rk, 2);
-	sender.sendMessage(test_mess);
-	sender.sendMessage(test_mess);
+	Sender s(rk, 10);
+	Receiver r(rk);
+
+	r.receiveMess(s.sendMessage(test_mess));
+	r.receiveMess(s.sendMessage(test_mess));
+	r.receiveMess(s.sendMessage(test_mess));
+	r.receiveMess(s.sendMessage(test_mess));
+	r.receiveMess(s.sendMessage(test_mess));
+	r.receiveMess(s.sendMessage(test_mess));
 
 }

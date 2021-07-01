@@ -25,14 +25,17 @@ public:
 	makeKeyChain(keyChainLen, rk);
     }
 
-    void sendMessage(std::string data) {
+    Message sendMessage(std::string data) {
 	Message mess;
 	mess.data = data;
-	mess.mac = sign(data, keys[keyCounter]);
+	mess.mac = sign(data, keys[keys.size() - keyCounter]);
+	std::string preamble = "mac of " + std::to_string(keyCounter + 1) + ". message";
+	testPrint(preamble, mess.mac);
 	
 	if(keyCounter < keyShift) 
 	    mess.disclosed_key = keys[keyCounter - keyShift];
 	keyCounter++;
+	return mess;
     }
 };
 

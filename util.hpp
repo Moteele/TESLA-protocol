@@ -24,10 +24,15 @@ KeyType sign(std::string mess, KeyType key) {
 	KeyType output;
 	HMAC(EVP_sha256(), key.data(), SHA256_DIGEST_LENGTH, to_uchar(mess).data(), mess.length(), output.data(), nullptr);
 
-	for(unsigned int i = 0; i < SHA256_DIGEST_LENGTH; ++i) {
-	   printf("%02x", output.data()[i]);
-	}
-	std::cout << std::endl;
 	return output;
+}
+
+void testPrint(std::string preamble, KeyType key) {
+    std::cout << preamble << ":   ";
+    for(unsigned int i = 0; i < SHA256_DIGEST_LENGTH; ++i) {
+       printf("%02x", key.data()[i]);
+    }
+    std::cout << std::endl;
+
 }
 
