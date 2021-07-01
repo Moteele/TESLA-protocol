@@ -28,13 +28,20 @@ public:
     Message sendMessage(std::string data) {
 	Message mess;
 	mess.data = data;
-	mess.mac = sign(data, keys[keys.size() - keyCounter]);
-	std::string preamble = "mac of " + std::to_string(keyCounter + 1) + ". message";
+	mess.mac = sign(data, keys[keys.size() - keyCounter - 1]);
+
+	std::string preamble = "SENDER: key of " + std::to_string(keyCounter + 1) + ". message";
+	testPrint(preamble, keys[keys.size() - keyCounter - 1]);
+	preamble = "SENDER: mac of " + std::to_string(keyCounter + 1) + ". message";
 	testPrint(preamble, mess.mac);
 	
-	if(keyCounter < keyShift) 
-	    mess.disclosed_key = keys[keyCounter - keyShift];
 	keyCounter++;
+
+	if(keyCounter > keyShift) {
+	    mess.disclosed_key = keys[keys.size() - keyCounter + keyShift];
+	    preamble = "SENDER: disclosed key of " + std::to_string(keyCounter - keyShift) + ". message";
+	    testPrint(preamble, mess.disclosed_key);
+	}
 	return mess;
     }
 };

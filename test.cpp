@@ -16,5 +16,9 @@ int main() {
 	r.receiveMess(s.sendMessage(test_mess));
 	r.receiveMess(s.sendMessage(test_mess));
 	r.receiveMess(s.sendMessage(test_mess));
+	r.receiveMess(s.sendMessage(test_mess));
+	r.receiveMess(s.sendMessage(test_mess));
+	r.receiveMess(s.sendMessage(test_mess));
+	r.receiveMess(s.sendMessage(test_mess));
 
 }

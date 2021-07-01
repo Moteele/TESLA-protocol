@@ -13,7 +13,7 @@ class Receiver {
     unsigned int counter = 0;
 
     void failed() {
-	std::cout << "incorrect message";
+	std::cout << "incorrect message\n";
     }
 
 public:
@@ -21,7 +21,7 @@ public:
 
     void receiveMess(Message mess) {
 	messages.emplace_back(mess);
-	if(messages.size() > keyShift) {
+	if(messages.size() > keyShift + 1) {
 	    checkIntegrity();
 	    checkKey();
 	}
@@ -42,9 +42,11 @@ public:
     }
     void checkKey() {
 	KeyType output;
-	EVP_Digest(messages[counter-1].mess.disclosed_key.data(), SHA256_DIGEST_LENGTH,
+	EVP_Digest(messages[counter].mess.disclosed_key.data(), SHA256_DIGEST_LENGTH,
 		output.data(), nullptr, EVP_sha256(), nullptr);
-	if(output != messages[counter].mess.disclosed_key)
+	std::string preamble = "RECEIVER: key of " + std::to_string(counter - keyShift) + ". message";
+	testPrint(preamble, output);
+	if(output != messages[counter - 1].mess.disclosed_key)
 	    failed();
     }
 
